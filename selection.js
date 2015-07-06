@@ -1,17 +1,18 @@
-	console.log("hi");
-        
-			chrome.runtime.onMessage.addListener( function(req,sender,sr)
-		{
-			if(req.msg==="getSelectedText"){
-				//alert("bye");
-				console.log("hi afgain");
-				sr({msg:"abcd"});
-				return true;
-			
-			}
-			else
-				console.log("bye");
-				
-		      
-			
-		});
+
+//starts as soon as a page matching our url expression loads.
+
+chrome.runtime.onMessage.addListener( function(request,sender,senderResponse)
+{
+	if(request.msg==="getSelectedText"){
+		
+		//console.log("hi afgain");
+		senderResponse({msg:window.getSelection().toString()});
+		
+
+	}
+	else
+		console.log("bye");
+	
+  
+
+});
