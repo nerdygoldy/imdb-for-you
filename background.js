@@ -1,36 +1,17 @@
-
-
-chrome.runtime.onMessage.addListener( function(request,sender,sendResponse)
-{
-    if( request.msg === "pingback" )
-    {
-    	console.log("hi");
-        
-    	chrome.tabs.query({active:!0,currentWindow:!0},function(tbs){
-	chrome.tabs.sendMessage(tbs[0].id,{msg:"getSelectedText"},
-	function(a){
-
-console.log(a.msg);
- sendResponse( {msg: "akshay"} );
-
-
-	})});
+var tid;
+chrome.runtime.onConnect.addListener(function(port) {
+    	port.onMessage.addListener(function (msg) {
+       		tid=msg.tid;
+       		console.log(msg.tid);
+        }
+    );
 
 
 
-    
-           
-
-        
-        
-
-	
-            
-
-              
-     }
-
-
+    	port.onDisconnect.addListener(function() {
+    		console.log("hi");
+    		chrome.browserAction.setBadgeText({text: "",tabId: tid });
+    		console.log("hi2");
+		});
     
 });
-
